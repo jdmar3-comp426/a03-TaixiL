@@ -1,4 +1,4 @@
-/**
+ /**
  *
  * @param {number} a
  * @param {number} b
@@ -8,8 +8,9 @@
  * returns: '3 + 4 = 7'
  * see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
  */
-export function sumToString(a, b) {
 
+  export function sumToString(a, b) {
+    return `${a} + ${b} = ${a+b}`
 }
 
 
@@ -24,7 +25,11 @@ export function sumToString(a, b) {
  *
  */
 export function getIncreasingArray(startNumber, endNumber) {
-
+    const numbers = [];
+    for (let i=startNumber; i<=endNumber; i++) {
+        numbers.push(i);
+    }
+    return numbers;
 }
 
 /**
@@ -35,7 +40,19 @@ export function getIncreasingArray(startNumber, endNumber) {
  * and https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
  */
 export function maxAndMin(numbers) {
+    let min = numbers[0];
+    let max = numbers[0];
 
+    for (let i=1; i<numbers.length; i++) {
+        if (numbers[i] > max) {
+            max = numbers[i];
+        } else if (numbers[i] < min) {
+            min = numbers[i];
+        }
+    }
+
+    let result = {min: min, max: max};
+    return result;
 }
 
 /**
@@ -48,6 +65,12 @@ export function maxAndMin(numbers) {
  * returns: {'2': 2, '3': 3, '6': 1, some: 2, hello: 1, '1,2': 1}
  *
  */
-export function countArray(array) {
+ export function countArray(array) {
+    const result = {};
+    const co = [... new Set(array)];
 
+    for (let i=0; i<co.length; i++) {
+        result[co[i]] = array.filter(x=> x==co[i]).length;
+    }
+    return result;
 }
