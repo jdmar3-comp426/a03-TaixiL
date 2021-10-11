@@ -1,7 +1,6 @@
 {
   "name": "a03",
   "version": "2.1.0",
-  "type": "module",
   "description": "",
   "main": " test.js",
   "scripts": {
