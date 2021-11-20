@@ -20,47 +20,51 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    avgMpg: function(array) {
-        const city = [];
-        for (let i=0; i<array.length; i++) {
-            city.push(array[i].city_mpg);
-        }
-        var city_avg = getStatistics(city).mean;
-
-        const highway = [];
-        for (let i=0; i<array.length; i++) {
-            highway.push(array[i].highway_mpg);
-        }
-        var highway_avg = getStatistics(highway).mean;
-
-        const result = {city: city_avg, highway: highway_avg};
-        return result;
-    },
-    allYearStats: function(array) {
-        const year = [];
-        for (let i=0; i<array.length; i++) {
-            year.push(array[i].year);
-        }
-
-        return getStatistics(year);
-    },
-    ratioHybrids: function(array) {
-        const isHybrid = [];
-        for (let i=0; i<array.length; i++) {
-            isHybrid.push(array[i].hybrid);
-        }
-
-        let count = 0;
-        for (let i=0; i<isHybrid.length; i++) {
-            if (isHybrid[i] == true) {
-                count ++;
-            }
-        }
-        return count;
-    },
+    avgMpg: getAvg(mpg_data),
+    allYearStats: getAllYearStats(mpg_data),
+    ratioHybrids: getRatioHybrids(mpg_data)
 };
 
+export function getAvg(array) {
+    const city = [];
+    for (let i=0; i<array.length; i++) {
+        city.push(array[i].city_mpg);
+    }
+    var city_avg = getStatistics(city).mean;
 
+    const highway = [];
+    for (let i=0; i<array.length; i++) {
+        highway.push(array[i].highway_mpg);
+    }
+    var highway_avg = getStatistics(highway).mean;
+
+    const result = {city: city_avg, highway: highway_avg};
+    return result;
+};
+
+export function getAllYearStats(array) {
+    const year = [];
+    for (let i=0; i<array.length; i++) {
+        year.push(array[i].year);
+    }
+
+    return getStatistics(year);
+};
+
+export function getRatioHybrids(array) {
+    const isHybrid = [];
+    for (let i=0; i<array.length; i++) {
+        isHybrid.push(array[i].hybrid);
+    }
+
+    let count = 0;
+    for (let i=0; i<isHybrid.length; i++) {
+        if (isHybrid[i] == true) {
+            count ++;
+        }
+    }
+    return count;
+};
 /**
  * HINT: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
  *

@@ -54,9 +54,10 @@ export function getMedian(array) {
   standard_deviation: 1.632993161855452
  }
  */
-export function getStatistics(array) {
-    const stats = {length: array.length, sum: getSum(array), mean: getSum(array)/array.length, median: getMedian(array),
-         min: Math.min.apply(null, array), max: Math.max.apply(null, array), variance: variance(array), standard_deviation: Math.sqrt(variance(array))};
+ export function getStatistics(array) {
+	const mea = getSum(array)/array.length;
+    const stats = {length: array.length, sum: getSum(array), mean: mea, median: getMedian(array),
+         min: Math.min.apply(null, array), max: Math.max.apply(null, array), variance: variance(array,mea), standard_deviation: Math.sqrt(variance(array,mea))};
     return stats;
     }
 
