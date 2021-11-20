@@ -65,6 +65,7 @@ export function getRatioHybrids(array) {
     }
     return count/mpg_data.length;
 };
+
 /**
  * HINT: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
  *
@@ -123,56 +124,65 @@ export function getRatioHybrids(array) {
  * }
  */
 export const moreStats = {
-    makerHybrids: function(array) {
-        const result = [];
-        const make_temp = [];
-        for (let i=0; i<array.length; i++) {
-            make_temp.push(array[i].make);
-        }
-        const ma = [... new Set(make_temp)];
-        for (let i=0; i<ma.length; i++) {
-            var make_string = ma[i];
-            const id_arr = [];
-            for (let j=0; j<array.length; j++) {
-                if (array[j].make == ma[i]) {
-                    id_arr.push(array[j].id);
-                }
-            }
-            result.push({make: make_string, hybrids: id_arr});
-        }
-        result.sort(function(a, b) {
-            return b.hybrids.length - a.hybrids.length;
-          });
-        return result;
-},
-        avgMpgByYearAndHybrid: function(array) {
-            const result = {};
-
-            const year_temp = [];
-            for (let i=0; i<array.length; i++) {
-                make_temp.push(array[i].year);
-            }
-            const ye = [... new Set(make_temp)];
-
-            for (let i=0; i<ye.length; i++) {
-                let year_num = ye[i];
-
-                const arr_hyb = [];
-                const arr_nonhyb = [];
-                for (let j=0; j<array.length; j++) {
-                    if (array[j].year == year_num && array[j].hybrid == true) {
-                        arr_hyb.push(array[j]);
-                    } else if (array[j].year == year_num) {
-                        arr_nonhyb.push(array[j]);
-                    }
-                }
-
-                const hybrid_avg = allCarStats.avgMpg(arr_hyb);
-                const notHybrid_avg = allCarStats.avgMpg(arr_nonhyb);
-
-                result[ye[i]] = {hybrid: hybrid_avg, notHybrid: notHybrid_avg};
-            }
-
-            return result;
-        }
+    makerHybrids: getMakerHybrids(mpg_data),
+    avgMpgByYearAndHybrid: getAvgMpgByYearAndHbrids(mpg_data)
 };
+
+export function getMakerHybrids(array) {
+    const result = [];
+    const make_temp = [];
+    for (let i=0; i<array.length; i++) {
+        make_temp.push(array[i].make);
+    }
+    const ma = [... new Set(make_temp)];
+    for (let i=0; i<ma.length; i++) {
+        var make_string = ma[i];
+        const id_arr = [];
+        for (let j=0; j<array.length; j++) {
+            if (array[j].make == ma[i]) {
+                id_arr.push(array[j].id);
+            }
+        }
+        result.push({make: make_string, hybrids: id_arr});
+    }
+    result.sort(function(a, b) {
+        return b.hybrids.length - a.hybrids.length;
+      });
+    return result;
+};
+
+export function getAvgMpgByYearAndHbrids(array) {
+    const result = {};
+
+    const year_temp = [];
+    for (let i=0; i<array.length; i++) {
+        make_temp.push(array[i].year);
+    }
+    const ye = [... new Set(make_temp)];
+
+    for (let i=0; i<ye.length; i++) {
+        let year_num = ye[i];
+
+        const arr_hyb = [];
+        const arr_nonhyb = [];
+        for (let j=0; j<array.length; j++) {
+            if (array[j].year == year_num && array[j].hybrid == true) {
+                arr_hyb.push(array[j]);
+            } else if (array[j].year == year_num) {
+                arr_nonhyb.push(array[j]);
+            }
+        }
+
+        const hybrid_avg = allCarStats.avgMpg(arr_hyb);
+        const notHybrid_avg = allCarStats.avgMpg(arr_nonhyb);
+
+        result[ye[i]] = {hybrid: hybrid_avg, notHybrid: notHybrid_avg};
+    }
+
+    return result;
+};
+
+
+
+
+
