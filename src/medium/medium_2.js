@@ -63,7 +63,7 @@ export function getRatioHybrids(array) {
             count ++;
         }
     }
-    return count;
+    return count/mpg_data.length;
 };
 /**
  * HINT: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
