@@ -173,8 +173,8 @@ export function getAvgMpgByYearAndHbrids(array) {
             }
         }
 
-        const hybrid_avg = allCarStats.getAvg(arr_hyb);
-        const notHybrid_avg = allCarStats.getAvg(arr_nonhyb);
+        const hybrid_avg = getAvg(arr_hyb);
+        const notHybrid_avg = getAvg(arr_nonhyb);
 
         result[ye[i]] = {hybrid: hybrid_avg, notHybrid: notHybrid_avg};
     }
