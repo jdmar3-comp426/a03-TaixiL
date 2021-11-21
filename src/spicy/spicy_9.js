@@ -167,6 +167,7 @@ export const filter = (arr, test) => {
             result.fail.push(arr[i]);
         }
     }
+    return result;
 };
 
 
