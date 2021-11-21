@@ -118,4 +118,24 @@ export function searchName(car_data, searchTerm) {
  */
 export function searchByYear(car_data, years) {
 
+    const result = [];
+
+    for(let i=0; i<car_data.length; i++) {
+        if (years.includes(car_data[i].year)) {
+            result.push(car_data[i]);
+        }
+    }
+
+    for (let i=0; i<result.length; i++) {
+        for(let j=i+1; j<result.length; j++) {
+            if (result[i].year<index[j].year) {
+                const temp = result[i];
+                result[i] = result[j];
+                result[j] = temp;
+            }
+        }
+    }
+    
+    return result;
+
 }
