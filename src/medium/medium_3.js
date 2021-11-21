@@ -19,6 +19,23 @@ queries.
  */
 export function searchHighPower(car_data, minHorsepower, minTorque) {
 
+    const result = [];
+
+    for (let i=0; i<car_data.length; i++) {
+        if (car_data[i].horsepower >= minHorsepower && car_data[i].torque >= minTorque) {
+            result.push(car_data[i]);
+        } 
+    }
+
+    for (let i=0; i<result.length; i++) {
+        for(let j=i+1; j<result.length; j++) {
+            if (result[i].horsepower<result[j].horsepower) {
+                const temp = result[i];
+                result[i] = result[j];
+                result[j] = temp;
+            }
+        }
+    }
 }
 
 
