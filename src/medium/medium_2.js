@@ -158,7 +158,7 @@ export function getAvgMpgByYearAndHbrids(array) {
     for (let i=0; i<array.length; i++) {
         year_temp.push(array[i].year);
     }
-    const ye = [... new Set(make_temp)];
+    const ye = [... new Set(year_temp)];
 
     for (let i=0; i<ye.length; i++) {
         let year_num = ye[i];
