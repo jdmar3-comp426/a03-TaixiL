@@ -36,6 +36,7 @@ export const repeatDemo = () => {
 export function con() {
     console.log("Hello, world!");
 }
+
 /**************************************************************************
  *
  * Function currying
@@ -49,7 +50,10 @@ export function con() {
  *   product of num1 and num2.
  */
 export const multiplyBy = (num1) => {
-
+    export function result(num2) {
+        return num1 * num2;
+    }
+    return result;
 };
 
 
@@ -57,7 +61,9 @@ export const multiplyBy = (num1) => {
  * Use the multiplyBy function to create and export a function named
  *   "tenTimes" that multiplies a number by 10.
  */
-export const tenTimes = undefined;
+export const tenTimes = (num) => {
+    return multiplyBy(num)(10);
+};
 
 
 /**
