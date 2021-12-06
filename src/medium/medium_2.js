@@ -1,5 +1,5 @@
 import mpg_data from "./data/mpg_data.js";
-import {getStatistics} from "./medium_1.js";
+import {getStatistics, getSum} from "./medium_1.js";
 
 /*
 This section can be done by using the array prototype functions.
@@ -20,11 +20,51 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+    avgMpg: getAvg(mpg_data),
+    allYearStats: getAllYearStats(mpg_data),
+    ratioHybrids: getRatioHybrids(mpg_data)
 };
 
+export function getAvg(array) {
+    const city = [];
+    for (let i=0; i<array.length; i++) {
+        city.push(array[i].city_mpg);
+    }
+    var city_avg = getStatistics(city).mean;
+
+    const highway = [];
+    for (let i=0; i<array.length; i++) {
+        highway.push(array[i].highway_mpg);
+    }
+    var highway_avg = getStatistics(highway).mean;
+
+    const result = {city: city_avg, highway: highway_avg};
+    return result;
+};
+
+export function getAllYearStats(array) {
+    const year = [];
+    for (let i=0; i<array.length; i++) {
+        year.push(array[i].year);
+    }
+
+    return getStatistics(year);
+};
+
+export function getRatioHybrids(array) {
+    const isHybrid = [];
+    for (let i=0; i<array.length; i++) {
+        isHybrid.push(array[i].hybrid);
+    }
+
+    let count = 0;
+    for (let i=0; i<isHybrid.length; i++) {
+        if (isHybrid[i] == true) {
+            count ++;
+        }
+    }
+    return count/mpg_data.length;
+};
 
 /**
  * HINT: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
@@ -84,6 +124,65 @@ export const allCarStats = {
  * }
  */
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+    makerHybrids: getMakerHybrids(mpg_data),
+    avgMpgByYearAndHybrid: getAvgMpgByYearAndHbrids(mpg_data)
 };
+
+export function getMakerHybrids(array) {
+    const result = [];
+    const make_temp = [];
+    for (let i=0; i<array.length; i++) {
+        make_temp.push(array[i].make);
+    }
+    const ma = [... new Set(make_temp)];
+    for (let i=0; i<ma.length; i++) {
+        var make_string = ma[i];
+        const id_arr = [];
+        for (let j=0; j<array.length; j++) {
+            if (array[j].make == ma[i]) {
+                id_arr.push(array[j].id);
+            }
+        }
+        result.push({make: make_string, hybrids: id_arr});
+    }
+    result.sort(function(a, b) {
+        return b.hybrids.length - a.hybrids.length;
+      });
+    return result;
+};
+
+export function getAvgMpgByYearAndHbrids(array) {
+    const result = {};
+
+    const year_temp = [];
+    for (let i=0; i<array.length; i++) {
+        year_temp.push(array[i].year);
+    }
+    const ye = [... new Set(year_temp)];
+
+    for (let i=0; i<ye.length; i++) {
+        let year_num = ye[i];
+
+        const arr_hyb = [];
+        const arr_nonhyb = [];
+        for (let j=0; j<array.length; j++) {
+            if (array[j].year == year_num && array[j].hybrid == true) {
+                arr_hyb.push(array[j]);
+            } else if (array[j].year == year_num) {
+                arr_nonhyb.push(array[j]);
+            }
+        }
+
+        const hybrid_avg = getAvg(arr_hyb);
+        const notHybrid_avg = getAvg(arr_nonhyb);
+
+        result[ye[i]] = {hybrid: hybrid_avg, notHybrid: notHybrid_avg};
+    }
+
+    return result;
+};
+
+
+
+
+
